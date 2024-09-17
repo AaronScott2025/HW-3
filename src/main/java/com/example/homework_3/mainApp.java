@@ -7,6 +7,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
@@ -26,6 +27,8 @@ public class mainApp extends Application {
     Image carpic = new Image(getClass().getResourceAsStream("/assets/GUI/car.png"));
 
     ImageView car = new ImageView(carpic);
+    Image robotpic = new Image(getClass().getResourceAsStream("/assets/GUI/robot.png"));
+    ImageView robo = new ImageView(robotpic);
 
     //Buttons for Animation versus playing yourself
     Button animation = new Button();
@@ -39,6 +42,10 @@ public class mainApp extends Application {
     TabPane tb = new TabPane();
     Tab tb1 = new Tab();
     Tab tb2 = new Tab();
+
+    //Victory Screen
+    Label lbl = new Label();
+
     @Override
     public void start(Stage stage) throws IOException {
         //Mazes Loaded
@@ -69,8 +76,7 @@ public class mainApp extends Application {
 
 
         animation.setOnAction(e-> {
-            Image robotpic = new Image(getClass().getResourceAsStream("/assets/GUI/robot.png"));
-            ImageView robo = new ImageView(robotpic);
+            boolean finished = false;
             double x = 15.0;
             double y = 260.0;
             robo.setX(x);
@@ -94,19 +100,17 @@ public class mainApp extends Application {
                     case W:
                         Transition w = new Transition() {
                             {
-                                setCycleDuration(javafx.util.Duration.seconds(.001));
+                                setCycleDuration(javafx.util.Duration.seconds(.01));
                             }
                             @Override
                             protected void interpolate(double v) {
-                                nextover[0] = maze1.getPixelReader().getArgb((int)(robo.getX())+15,(int)(robo.getY()-2)); //+15 to offset an error
-                                nextover[1] = maze1.getPixelReader().getArgb((int)(robo.getX())+15,(int)(robo.getY()-2));
-                                nextover[2] = maze1.getPixelReader().getArgb((int)(robo.getX()),(int)(robo.getY()-2));
+                                nextover[0] = maze1.getPixelReader().getArgb((int)(robo.getX())+14,(int)(robo.getY()-2)); //Addition to offset an error
                                 System.out.println(bluevalue);
                                 System.out.println(nextover[0]);
                                 System.out.println(maze1.getPixelReader().getArgb((int)(robo.getX())+1,(int)(robo.getY()-2)));
                                 int x = 0;
                                 while(x <= 2) {
-                                    if(nextover[x] < -1) {
+                                    if(nextover[0] < -1) {
                                         break;
                                     }
                                     x++;
@@ -122,19 +126,17 @@ public class mainApp extends Application {
                     case S:
                         Transition s = new Transition() {
                             {
-                                setCycleDuration(javafx.util.Duration.seconds(.001));
+                                setCycleDuration(javafx.util.Duration.seconds(.01));
                             }
                             @Override
                             protected void interpolate(double v) {
-                                nextover[0] = maze1.getPixelReader().getArgb((int)(robo.getX())+15,(int)(robo.getY()+2)); //+15 to offset an error
-                                nextover[1] = maze1.getPixelReader().getArgb((int)(robo.getX())+15,(int)(robo.getY()+2));
-                                nextover[2] = maze1.getPixelReader().getArgb((int)(robo.getX()),(int)(robo.getY()+2));
+                                nextover[0] = maze1.getPixelReader().getArgb((int)(robo.getX())+16,(int)(robo.getY()+24)); //Addition to offset an error
                                 System.out.println(bluevalue);
                                 System.out.println(nextover[0]);
                                 System.out.println(maze1.getPixelReader().getArgb((int)(robo.getX())+1,(int)(robo.getY()-2)));
                                 int x = 0;
                                 while(x <= 2) {
-                                    if(nextover[x] < -1) {
+                                    if(nextover[0] < -1) {
                                         break;
                                     }
                                     x++;
@@ -150,19 +152,17 @@ public class mainApp extends Application {
                     case A:
                         Transition a = new Transition() {
                             {
-                                setCycleDuration(javafx.util.Duration.seconds(.001));
+                                setCycleDuration(javafx.util.Duration.seconds(.01));
                             }
                             @Override
                             protected void interpolate(double v) {
-                                nextover[0] = maze1.getPixelReader().getArgb((int)(robo.getX())+17,(int)(robo.getY())); //+15 to offset an error
-                                nextover[1] = maze1.getPixelReader().getArgb((int)(robo.getX())+14,(int)(robo.getY()));
-                                nextover[2] = maze1.getPixelReader().getArgb((int)(robo.getX()),(int)(robo.getY()-2));
+                                nextover[0] = maze1.getPixelReader().getArgb((int)(robo.getX())+13,(int)(robo.getY()));//Addition to offset an error
                                 System.out.println(bluevalue);
                                 System.out.println(nextover[0]);
                                 System.out.println(maze1.getPixelReader().getArgb((int)(robo.getX())+1,(int)(robo.getY()-2)));
                                 int x = 0;
                                 while(x <= 2) {
-                                    if(nextover[x] < -1) {
+                                    if(nextover[0] < -1) {
                                         break;
                                     }
                                     x++;
@@ -178,19 +178,18 @@ public class mainApp extends Application {
                     case D:
                         Transition d = new Transition() {
                             {
-                                setCycleDuration(javafx.util.Duration.seconds(.001));
+                                setCycleDuration(javafx.util.Duration.seconds(.01));
                             }
                             @Override
                             protected void interpolate(double v) {
-                                nextover[0] = maze1.getPixelReader().getArgb((int)(robo.getX())+14,(int)(robo.getY()-2)); //+15 to offset an error
-                                nextover[1] = maze1.getPixelReader().getArgb((int)(robo.getX())+17,(int)(robo.getY()-2));
-                                nextover[2] = maze1.getPixelReader().getArgb((int)(robo.getX()),(int)(robo.getY()-2));
+                                nextover[0] = maze1.getPixelReader().getArgb((int)(robo.getX())+20,(int)(robo.getY()+24)); //Addition to offset an error
+
                                 System.out.println(bluevalue);
                                 System.out.println(nextover[0]);
                                 System.out.println(maze1.getPixelReader().getArgb((int)(robo.getX())+1,(int)(robo.getY()-2)));
                                 int x = 0;
                                 while(x <= 2) {
-                                    if(nextover[x] < -1) {
+                                    if(nextover[0] < -1) {
                                         break;
                                     }
                                     x++;
@@ -198,6 +197,11 @@ public class mainApp extends Application {
                                 System.out.println("x = " + x);
                                 if(x == 3) {
                                     robo.setX(robo.getX()+1);
+                                    System.out.println(robo.getX() + " " + robo.getY());
+                                    if((237 < robo.getY() && robo.getY() > 249) && (robo.getX() > 579)) {
+                                        lbl.setText("Congratulations!");
+                                        g1.getChildren().add(lbl);
+                                    }
                                 }
                             }
                         };
