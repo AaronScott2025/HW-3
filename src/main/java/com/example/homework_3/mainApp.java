@@ -11,6 +11,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.PixelReader;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.robot.Robot;
@@ -77,9 +78,11 @@ public class mainApp extends Application {
             g1.getChildren().add(robo);
             Robot r = new Robot();
             double bluevalue = r.getPixelColor(robo.getX(),robo.getY()).getBlue();
-            final double[] nextover = new double[1];
+            int pr = maze1.getPixelReader().getArgb(15,260);
+            System.out.println(pr);
+            final double[] nextover = new double[3];
 
-//            Rectangle rr = new Rectangle(); VERIFY LOCATION FOR ROBOT
+//            Rectangle rr = new Rectangle(); //VERIFY LOCATION FOR ROBOT
 //            rr.setHeight(25);
 //            rr.setWidth(25);
 //            rr.setX(robo.getX());
@@ -95,10 +98,21 @@ public class mainApp extends Application {
                             }
                             @Override
                             protected void interpolate(double v) {
-                                nextover[0] = r.getPixelColor((robo.getX()),robo.getY() - 3).getBlue();
+                                nextover[0] = maze1.getPixelReader().getArgb((int)(robo.getX())+15,(int)(robo.getY()-2)); //+15 to offset an error
+                                nextover[1] = maze1.getPixelReader().getArgb((int)(robo.getX())+15,(int)(robo.getY()-2));
+                                nextover[2] = maze1.getPixelReader().getArgb((int)(robo.getX()),(int)(robo.getY()-2));
                                 System.out.println(bluevalue);
                                 System.out.println(nextover[0]);
-                                if(nextover[0] < .4745) {
+                                System.out.println(maze1.getPixelReader().getArgb((int)(robo.getX())+1,(int)(robo.getY()-2)));
+                                int x = 0;
+                                while(x <= 2) {
+                                    if(nextover[x] < -1) {
+                                        break;
+                                    }
+                                    x++;
+                                }
+                                System.out.println("x = " + x);
+                                if(x == 3) {
                                     robo.setY(robo.getY()-1);
                                 }
                             }
@@ -112,10 +126,21 @@ public class mainApp extends Application {
                             }
                             @Override
                             protected void interpolate(double v) {
-                                nextover[0] = r.getPixelColor((robo.getX()),robo.getY() + 3).getBlue();
+                                nextover[0] = maze1.getPixelReader().getArgb((int)(robo.getX())+15,(int)(robo.getY()+2)); //+15 to offset an error
+                                nextover[1] = maze1.getPixelReader().getArgb((int)(robo.getX())+15,(int)(robo.getY()+2));
+                                nextover[2] = maze1.getPixelReader().getArgb((int)(robo.getX()),(int)(robo.getY()+2));
                                 System.out.println(bluevalue);
                                 System.out.println(nextover[0]);
-                                if(nextover[0] < .4745) {
+                                System.out.println(maze1.getPixelReader().getArgb((int)(robo.getX())+1,(int)(robo.getY()-2)));
+                                int x = 0;
+                                while(x <= 2) {
+                                    if(nextover[x] < -1) {
+                                        break;
+                                    }
+                                    x++;
+                                }
+                                System.out.println("x = " + x);
+                                if(x == 3) {
                                     robo.setY(robo.getY() + 1);
                                 }
                             }
@@ -129,10 +154,21 @@ public class mainApp extends Application {
                             }
                             @Override
                             protected void interpolate(double v) {
-                                nextover[0] = r.getPixelColor((robo.getX() - 3),robo.getY()).getBlue();
+                                nextover[0] = maze1.getPixelReader().getArgb((int)(robo.getX())+17,(int)(robo.getY())); //+15 to offset an error
+                                nextover[1] = maze1.getPixelReader().getArgb((int)(robo.getX())+14,(int)(robo.getY()));
+                                nextover[2] = maze1.getPixelReader().getArgb((int)(robo.getX()),(int)(robo.getY()-2));
                                 System.out.println(bluevalue);
                                 System.out.println(nextover[0]);
-                                if(nextover[0] < .4745) {
+                                System.out.println(maze1.getPixelReader().getArgb((int)(robo.getX())+1,(int)(robo.getY()-2)));
+                                int x = 0;
+                                while(x <= 2) {
+                                    if(nextover[x] < -1) {
+                                        break;
+                                    }
+                                    x++;
+                                }
+                                System.out.println("x = " + x);
+                                if(x == 3) {
                                     robo.setX(robo.getX()-1);
                                 }
                             }
@@ -146,10 +182,21 @@ public class mainApp extends Application {
                             }
                             @Override
                             protected void interpolate(double v) {
-                                nextover[0] = r.getPixelColor((robo.getX() + 3),robo.getY()).getBlue();
+                                nextover[0] = maze1.getPixelReader().getArgb((int)(robo.getX())+14,(int)(robo.getY()-2)); //+15 to offset an error
+                                nextover[1] = maze1.getPixelReader().getArgb((int)(robo.getX())+17,(int)(robo.getY()-2));
+                                nextover[2] = maze1.getPixelReader().getArgb((int)(robo.getX()),(int)(robo.getY()-2));
                                 System.out.println(bluevalue);
                                 System.out.println(nextover[0]);
-                                if(nextover[0] < .4745) {
+                                System.out.println(maze1.getPixelReader().getArgb((int)(robo.getX())+1,(int)(robo.getY()-2)));
+                                int x = 0;
+                                while(x <= 2) {
+                                    if(nextover[x] < -1) {
+                                        break;
+                                    }
+                                    x++;
+                                }
+                                System.out.println("x = " + x);
+                                if(x == 3) {
                                     robo.setX(robo.getX()+1);
                                 }
                             }
