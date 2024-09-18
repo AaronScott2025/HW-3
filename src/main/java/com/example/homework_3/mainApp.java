@@ -48,7 +48,7 @@ public class mainApp extends Application {
     Label lbl = new Label();
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) {
         //Mazes Loaded
         Image maze1 = new Image(getClass().getResourceAsStream("/assets/GUI/maze.png")); //609 X 430
         ImageView view1 = new ImageView(maze1); view1.setFitWidth(609);view1.setFitHeight(430);
@@ -112,7 +112,7 @@ public class mainApp extends Application {
             robo.setX(15.0);
             robo.setY(260.0);
             final double[] nextover = new double[3];
-//            Rectangle rr = new Rectangle();            //VERIFYS LOCATION FOR ROBOT. DO NOT USE!!!!
+//            Rectangle rr = new Rectangle();            //VERIFIES LOCATION FOR ROBO. DO NOT USE!!!!
 //            rr.setHeight(25);
 //            rr.setWidth(25);
 //            rr.setX(robo.getX());
@@ -149,8 +149,7 @@ public class mainApp extends Application {
                             int x = 0;
                             if (nextover[0] >= -1) {
                                 robo.setX(robo.getX() + 2);
-                            };
-                            ; // Move right
+                            };// Move right
                             break;
                     }
                 });
