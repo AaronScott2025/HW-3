@@ -15,13 +15,8 @@ import javafx.scene.shape.Path;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-/**
- * TODO: Add Car Class/Functionality. Tab2 Functions (Buttons and actions).
- */
 public class mainApp extends Application {
     //Icons Loaded
-    Image carpic = new Image(getClass().getResourceAsStream("/assets/GUI/car.png"));
-    ImageView car = new ImageView(carpic);
     Image robotpic = new Image(getClass().getResourceAsStream("/assets/GUI/robot.png"));
     ImageView robo = new ImageView(robotpic);
     Image robotpic2 = new Image(getClass().getResourceAsStream("/assets/GUI/robot.png"));
@@ -40,6 +35,9 @@ public class mainApp extends Application {
     //Groups for tabs
     Group g1 = new Group();
     Group g2 = new Group();
+
+    // Declare the Car variable
+    Car car;
 
     @Override
     public void start(Stage stage) {
@@ -97,26 +95,24 @@ public class mainApp extends Application {
         Takes the Path, and runs the Android image through the maze. 15 seconds
          */
         robot.setOnAction(e-> {
-            g1.getChildren().removeAll(robo,car,robo2); //Reset page
+            g1.getChildren().removeAll(robo,robo2); //Reset page
             g1.getChildren().add(robo2); //Adds robo2
             PathTransition doPath = new PathTransition();
             doPath.setDuration(Duration.seconds(15)); //15 sec animation
             doPath.setNode(robo2);
             doPath.setPath(p1); //Set Path
             doPath.play(); //Plays for 15 seconds
-            });
+        });
 
         player.setOnAction(e->{
-            g1.getChildren().removeAll(robo,car,robo2); //Reset page
+            g1.getChildren().removeAll(robo,robo2); //Reset page
+            car = new Car();
             g1.getChildren().add(car); //Adds car
-            //make car smaller preserve aspect ratio
-            car.setFitHeight(25);
-            car.setFitWidth(25);
-            car.setX(15.0); //Starting X
-            car.setY(260.0); //Starting Y
+            car.setScaleX(0.5);
+            car.setScaleY(0.5);
+            car.setPosition(15.0, 260.0); //Starting position
 
             final double[] nextover = new double[3];
-
 
             /*
             KeyListener for Tab1 Animation -
@@ -125,27 +121,34 @@ public class mainApp extends Application {
             scene.setOnKeyPressed(event -> {
                 switch (event.getCode()) {
                     case W:
-                        nextover[0] = maze1.getPixelReader().getArgb((int) (car.getX()) + 14, (int) (car.getY() - 2)); //Addition to offset an error
+                        nextover[0] = maze1.getPixelReader().getArgb((int) (car.getLayoutX()) + 14, (int) (car.getLayoutY() - 2)); //Addition to offset an error
                         if (nextover[0] >= -1) {
-                            car.setY(car.getY() - 2);
+                            car.setLayoutY(car.getLayoutY() - 2);
+                            car.setRotation(-90);
+                            // Face up
                         }; // Move up
                         break;
                     case S:
-                        nextover[0] = maze1.getPixelReader().getArgb((int) (car.getX()) + 16, (int) (car.getY() + 24)); //Addition to offset an error
+                        nextover[0] = maze1.getPixelReader().getArgb((int) (car.getLayoutX()) + 16, (int) (car.getLayoutY() + 24)); //Addition to offset an error
                         if (nextover[0] >= -1) {
-                            car.setY(car.getY() + 2);
+                            car.setLayoutY(car.getLayoutY() + 2);
+                            car.setRotation(90); // Face down
                         }; // Move down
                         break;
                     case A:
-                        nextover[0] = maze1.getPixelReader().getArgb((int) (car.getX()) + 5, (int) (car.getY()));//Addition to offset an error
+                        nextover[0] = maze1.getPixelReader().getArgb((int) (car.getLayoutX()) + 5, (int) (car.getLayoutY()));//Addition to offset an error
                         if (nextover[0] >= -1) {
-                            car.setX(car.getX() - 2);
+                            car.setLayoutX(car.getLayoutX() - 2);
+                            car.setRotation(0);
+                            car.invertHorizontal(); // Face left
                         };// Move left
                         break;
                     case D:
-                        nextover[0] = maze1.getPixelReader().getArgb((int) (car.getX()) + 20, (int) (car.getY() + 24)); //Addition to offset an error
+                        nextover[0] = maze1.getPixelReader().getArgb((int) (car.getLayoutX()) + 20, (int) (car.getLayoutY() + 24)); //Addition to offset an error
                         if (nextover[0] >= -1) {
-                            car.setX(car.getX() + 2);
+                            car.setLayoutX(car.getLayoutX() + 2);
+                            car.setRotation(0);
+                            car.resetInvertHorizontal();// Face right
                         };// Move right
                         break;
                 }
@@ -161,47 +164,78 @@ public class mainApp extends Application {
             robo.setX(15.0); //Starting X
             robo.setY(260.0); //Starting Y
             final double[] nextover = new double[3];
-//            Rectangle rr = new Rectangle();            //VERIFIES LOCATION FOR ROBO. DO NOT USE!!!!
-//            rr.setHeight(25);
-//            rr.setWidth(25);
-//            rr.setX(robo.getX());
-//            rr.setY(robo.getY());
-//            rr.setFill(Color.BLACK);
-//            g1.getChildren().add(rr);
 
                 /*
                 KeyListener for Tab1 Animation -
                 Moves by 2 pixels each press to speed up process. Uses WASD
                  */
-                scene.setOnKeyPressed(event -> {
-                    switch (event.getCode()) {
-                        case W:
-                            nextover[0] = maze1.getPixelReader().getArgb((int) (robo.getX()) + 14, (int) (robo.getY() - 2)); //Addition to offset an error
-                            if (nextover[0] >= -1) {
-                                robo.setY(robo.getY() - 2);
-                            }; // Move up
-                            break;
-                        case S:
-                            nextover[0] = maze1.getPixelReader().getArgb((int) (robo.getX()) + 16, (int) (robo.getY() + 24)); //Addition to offset an error
-                            if (nextover[0] >= -1) {
-                                robo.setY(robo.getY() + 2);
-                            }; // Move down
-                            break;
-                        case A:
-                            nextover[0] = maze1.getPixelReader().getArgb((int) (robo.getX()) + 5, (int) (robo.getY()));//Addition to offset an error
-                            if (nextover[0] >= -1) {
-                                robo.setX(robo.getX() - 2);
-                            };// Move left
-                            break;
-                        case D:
-                            nextover[0] = maze1.getPixelReader().getArgb((int) (robo.getX()) + 20, (int) (robo.getY() + 24)); //Addition to offset an error
-                            if (nextover[0] >= -1) {
-                                robo.setX(robo.getX() + 2);
-                            };// Move right
-                            break;
-                    }
-                });
+            scene.setOnKeyPressed(event -> {
+                switch (event.getCode()) {
+                    case W:
+                        nextover[0] = maze1.getPixelReader().getArgb((int) (robo.getX()) + 14, (int) (robo.getY() - 2)); //Addition to offset an error
+                        if (nextover[0] >= -1) {
+                            robo.setY(robo.getY() - 2);
+                        }; // Move up
+                        break;
+                    case S:
+                        nextover[0] = maze1.getPixelReader().getArgb((int) (robo.getX()) + 16, (int) (robo.getY() + 24)); //Addition to offset an error
+                        if (nextover[0] >= -1) {
+                            robo.setY(robo.getY() + 2);
+                        }; // Move down
+                        break;
+                    case A:
+                        nextover[0] = maze1.getPixelReader().getArgb((int) (robo.getX()) + 5, (int) (robo.getY()));//Addition to offset an error
+                        if (nextover[0] >= -1) {
+                            robo.setX(robo.getX() - 2);
+                        };// Move left
+                        break;
+                    case D:
+                        nextover[0] = maze1.getPixelReader().getArgb((int) (robo.getX()) + 20, (int) (robo.getY() + 24)); //Addition to offset an error
+                        if (nextover[0] >= -1) {
+                            robo.setX(robo.getX() + 2);
+                        };// Move right
+                        break;
+                }
+            });
         });
+
+        animation2.setOnAction(e->{
+            g2.getChildren().removeAll(robo,robo2); //Reset page
+            g2.getChildren().add(robo); //Adds robo
+            robo.setX(15.0); //Starting X
+            robo.setY(260.0); //add the full functionality of the robot here
+            final double[] nextover = new double[3];
+
+            scene.setOnKeyPressed(event -> {
+                switch (event.getCode()) {
+                    case W:
+                        nextover[0] = maze2.getPixelReader().getArgb((int) (robo.getX()) + 14, (int) (robo.getY() - 2)); //Addition to offset an error
+                        if (nextover[0] >= -1) {
+                            robo.setY(robo.getY() - 2);
+                        }; // Move up
+                        break;
+                    case S:
+                        nextover[0] = maze2.getPixelReader().getArgb((int) (robo.getX()) + 16, (int) (robo.getY() + 24)); //Addition to offset an error
+                        if (nextover[0] >= -1) {
+                            robo.setY(robo.getY() + 2);
+                        }; // Move down
+                        break;
+                    case A:
+                        nextover[0] = maze2.getPixelReader().getArgb((int) (robo.getX()) + 5, (int) (robo.getY()));//Addition to offset an error
+                        if (nextover[0] >= -1) {
+                            robo.setX(robo.getX() - 2);
+                        };// Move left
+                        break;
+                    case D:
+                        nextover[0] = maze2.getPixelReader().getArgb((int) (robo.getX()) + 20, (int) (robo.getY() + 24)); //Addition to offset an error
+                        if (nextover[0] >= -1) {
+                            robo.setX(robo.getX() + 2);
+                        };// Move right
+                        break;
+                }
+            });
+        });
+        final double[] nextover = new double[3];
 
     }
 
