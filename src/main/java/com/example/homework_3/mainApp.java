@@ -9,9 +9,11 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -21,6 +23,7 @@ public class mainApp extends Application {
     ImageView robo = new ImageView(robotpic);
     Image robotpic2 = new Image(getClass().getResourceAsStream("/assets/GUI/robot.png"));
     ImageView robo2 = new ImageView(robotpic);
+    Rectangle r = new Rectangle();
 
     //Buttons for Animation, Car, And Robot (Tab 1)
     Button animation = new Button();
@@ -37,7 +40,8 @@ public class mainApp extends Application {
     Group g2 = new Group();
 
     // Declare the Car variable
-    Car car;
+    Car car = new Car();
+    Car car2 = new Car();
 
     @Override
     public void start(Stage stage) {
@@ -68,7 +72,6 @@ public class mainApp extends Application {
         stage.setScene(scene);
         stage.setTitle("Maze Project | Group 5 | Use 'W A S D' To move Up Left Down and Right Respectively");
         stage.show();
-
         /*
         Path for Automatic Path button on Tab1. Starts at (15,270). Ends at (590,260).
         Initialized here to not waste time on action (Button Press).
@@ -95,7 +98,7 @@ public class mainApp extends Application {
         Takes the Path, and runs the Android image through the maze. 15 seconds
          */
         robot.setOnAction(e-> {
-            g1.getChildren().removeAll(robo,robo2); //Reset page
+            g1.getChildren().removeAll(robo,robo2,car); //Reset page
             g1.getChildren().add(robo2); //Adds robo2
             PathTransition doPath = new PathTransition();
             doPath.setDuration(Duration.seconds(15)); //15 sec animation
@@ -104,13 +107,21 @@ public class mainApp extends Application {
             doPath.play(); //Plays for 15 seconds
         });
 
+        /*
+        Car Action Button -
+        Clears board, and sets starting point of the Car Object from the Car Class. Moves with WASD
+         */
         player.setOnAction(e->{
-            g1.getChildren().removeAll(robo,robo2); //Reset page
-            car = new Car();
-            g1.getChildren().add(car); //Adds car
-            car.setScaleX(0.5);
-            car.setScaleY(0.5);
-            car.setPosition(15.0, 260.0); //Starting position
+            g1.getChildren().removeAll(robo,robo2,car,r); //Reset page
+            g1.getChildren().addAll(car,r); //Adds car and hitbox
+            car.setScaleX(0.4);
+            car.setScaleY(0.4);
+            car.setPosition(12.0, 250.0); //Starting position
+            r.setFill(Color.TRANSPARENT);
+            r.setHeight(15);
+            r.setWidth(20);
+            r.setLayoutX(car.getLayoutX()+18);
+            r.setLayoutY(car.getLayoutY()+18); //Starting position
 
             final double[] nextover = new double[3];
 
@@ -121,7 +132,9 @@ public class mainApp extends Application {
             scene.setOnKeyPressed(event -> {
                 switch (event.getCode()) {
                     case W:
-                        nextover[0] = maze1.getPixelReader().getArgb((int) (car.getLayoutX()) + 14, (int) (car.getLayoutY() - 2)); //Addition to offset an error
+                        r.setLayoutX(car.getLayoutX()+14);
+                        r.setLayoutY(car.getLayoutY()+18); //Starting position
+                        nextover[0] = maze1.getPixelReader().getArgb((int) (r.getLayoutX()) + 12, (int) (r.getLayoutY()+10)); //Addition to offset an error
                         if (nextover[0] >= -1) {
                             car.setLayoutY(car.getLayoutY() - 2);
                             car.setRotation(-90);
@@ -129,14 +142,18 @@ public class mainApp extends Application {
                         }; // Move up
                         break;
                     case S:
-                        nextover[0] = maze1.getPixelReader().getArgb((int) (car.getLayoutX()) + 16, (int) (car.getLayoutY() + 24)); //Addition to offset an error
+                        r.setLayoutX(car.getLayoutX()+14);
+                        r.setLayoutY(car.getLayoutY()+18); //Starting position
+                        nextover[0] = maze1.getPixelReader().getArgb((int) (r.getLayoutX()) + 12, (int) (r.getLayoutY()+14)); //Addition to offset an error
                         if (nextover[0] >= -1) {
                             car.setLayoutY(car.getLayoutY() + 2);
                             car.setRotation(90); // Face down
                         }; // Move down
                         break;
                     case A:
-                        nextover[0] = maze1.getPixelReader().getArgb((int) (car.getLayoutX()) + 5, (int) (car.getLayoutY()));//Addition to offset an error
+                        r.setLayoutX(car.getLayoutX()+14);
+                        r.setLayoutY(car.getLayoutY()+18); //Starting position
+                        nextover[0] = maze1.getPixelReader().getArgb((int) (r.getLayoutX()) + 10, (int) (r.getLayoutY()+12));//Addition to offset an error
                         if (nextover[0] >= -1) {
                             car.setLayoutX(car.getLayoutX() - 2);
                             car.setRotation(0);
@@ -144,7 +161,9 @@ public class mainApp extends Application {
                         };// Move left
                         break;
                     case D:
-                        nextover[0] = maze1.getPixelReader().getArgb((int) (car.getLayoutX()) + 20, (int) (car.getLayoutY() + 24)); //Addition to offset an error
+                        r.setLayoutX(car.getLayoutX()+14);
+                        r.setLayoutY(car.getLayoutY()+18); //Starting position
+                        nextover[0] = maze1.getPixelReader().getArgb((int) (r.getLayoutX()) + 14, (int) (r.getLayoutY()+12)); //Addition to offset an error
                         if (nextover[0] >= -1) {
                             car.setLayoutX(car.getLayoutX() + 2);
                             car.setRotation(0);
@@ -163,7 +182,7 @@ public class mainApp extends Application {
             g1.getChildren().add(robo); //Adds robo
             robo.setX(15.0); //Starting X
             robo.setY(260.0); //Starting Y
-            final double[] nextover = new double[3];
+            final double[] nextover = new double[1];
 
                 /*
                 KeyListener for Tab1 Animation -
