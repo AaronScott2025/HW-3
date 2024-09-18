@@ -92,6 +92,31 @@ public class mainApp extends Application {
                 new LineTo(565,260),
                 new LineTo(590,260)
         );
+        /*
+        Path for Automatic Path button on Tab2. Starts at (40,40). Ends at (575,390).
+        Initialized here to not waste time on action (Button Press).
+         */
+        Path p2 = new Path(
+                new MoveTo(40,40),
+                new LineTo(40,375),
+                new LineTo(250,375),
+                new LineTo(250,187),
+                new LineTo(425,187),
+                new LineTo(425,40),
+                new LineTo(575,40),
+                new LineTo(575,390)
+
+        );
+
+        robot2.setOnAction(e-> {
+            g2.getChildren().removeAll(robo,robo2,car); //Reset page
+            g2.getChildren().add(robo2); //Adds robo2
+            PathTransition doPath = new PathTransition();
+            doPath.setDuration(Duration.seconds(15)); //15 sec animation
+            doPath.setNode(robo2);
+            doPath.setPath(p2); //Set Path
+            doPath.play(); //Plays for 15 seconds
+        });
 
         /*
         Automatic path button for Droid -
