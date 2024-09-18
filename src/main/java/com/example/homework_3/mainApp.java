@@ -15,6 +15,9 @@ import javafx.scene.shape.Path;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+/**
+ * TODO: Add Car Class/Functionality. Tab2 Functions (Buttons and actions). Car for Tab1
+ */
 public class mainApp extends Application {
     //Icons Loaded
     Image carpic = new Image(getClass().getResourceAsStream("/assets/GUI/car.png"));
@@ -71,7 +74,7 @@ public class mainApp extends Application {
 
         /*
         Path for Automatic Path button on Tab1. Starts at (15,270). Ends at (590,260).
-        Initialized here to not waste time on action.
+        Initialized here to not waste time on action (Button Press).
          */
         Path p1 = new Path(
                 new MoveTo(15,270),
@@ -123,7 +126,8 @@ public class mainApp extends Application {
 //            g1.getChildren().add(rr);
 
                 /*
-                KeyListener. Moves by 2 pixels each press to speed up process. Uses WASD
+                KeyListener for Tab1 Animation -
+                Moves by 2 pixels each press to speed up process. Uses WASD
                  */
                 scene.setOnKeyPressed(event -> {
                     switch (event.getCode()) {
