@@ -119,74 +119,37 @@ public class mainApp extends Application {
 //            rr.setY(robo.getY());
 //            rr.setFill(Color.BLACK);
 //            g1.getChildren().add(rr);
+                /*
+                KeyListener. Moves by 2 pixels each press to speed up process. Uses WASD
+                 */
                 scene.setOnKeyPressed(event -> {
                     switch (event.getCode()) {
                         case W:
-                            Transition w = new Transition() {
-                                {
-                                    setCycleDuration(javafx.util.Duration.seconds(.01));
-                                }
-
-                                @Override
-                                protected void interpolate(double v) {
-                                    nextover[0] = maze1.getPixelReader().getArgb((int) (robo.getX()) + 14, (int) (robo.getY() - 2)); //Addition to offset an error
-                                    if (nextover[0] >= -1) {
-                                        robo.setY(robo.getY() - 1);
-                                    }
-                                }
+                            nextover[0] = maze1.getPixelReader().getArgb((int) (robo.getX()) + 14, (int) (robo.getY() - 2)); //Addition to offset an error
+                            if (nextover[0] >= -1) {
+                                robo.setY(robo.getY() - 2);
                             }; // Move up
-                            w.play();
                             break;
                         case S:
-                            Transition s = new Transition() {
-                                {
-                                    setCycleDuration(javafx.util.Duration.seconds(.01));
-                                }
-
-                                @Override
-                                protected void interpolate(double v) {
-                                    nextover[0] = maze1.getPixelReader().getArgb((int) (robo.getX()) + 16, (int) (robo.getY() + 24)); //Addition to offset an error
-                                    if (nextover[0] >= -1) {
-                                        robo.setY(robo.getY() + 1);
-                                    }
-                                }
+                            nextover[0] = maze1.getPixelReader().getArgb((int) (robo.getX()) + 16, (int) (robo.getY() + 24)); //Addition to offset an error
+                            if (nextover[0] >= -1) {
+                                robo.setY(robo.getY() + 2);
                             }; // Move down
-                            s.play();
                             break;
                         case A:
-                            Transition a = new Transition() {
-                                {
-                                    setCycleDuration(javafx.util.Duration.seconds(.01));
-                                }
+                            nextover[0] = maze1.getPixelReader().getArgb((int) (robo.getX()) + 5, (int) (robo.getY()));//Addition to offset an error
 
-                                @Override
-                                protected void interpolate(double v) {
-                                    nextover[0] = maze1.getPixelReader().getArgb((int) (robo.getX()) + 5, (int) (robo.getY()));//Addition to offset an error
+                            if (nextover[0] >= -1) {
+                                robo.setX(robo.getX() - 2);
 
-                                    if (nextover[0] >= -1) {
-                                        robo.setX(robo.getX() - 1);
-                                    }
-                                }
-                            };
-                            a.play(); // Move left
+                            };// Move left
                             break;
                         case D:
-                            Transition d = new Transition() {
-                                {
-                                    setCycleDuration(javafx.util.Duration.seconds(.01));
-                                }
-
-                                @Override
-                                protected void interpolate(double v) {
-                                    nextover[0] = maze1.getPixelReader().getArgb((int) (robo.getX()) + 20, (int) (robo.getY() + 24)); //Addition to offset an error
-                                    int x = 0;
-                                    if (nextover[0] >= -1) {
-                                        robo.setX(robo.getX() + 1);
-
-                                    }
-                                }
+                            nextover[0] = maze1.getPixelReader().getArgb((int) (robo.getX()) + 20, (int) (robo.getY() + 24)); //Addition to offset an error
+                            int x = 0;
+                            if (nextover[0] >= -1) {
+                                robo.setX(robo.getX() + 2);
                             };
-                            d.play();
                             ; // Move right
                             break;
                     }
