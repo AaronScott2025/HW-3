@@ -70,7 +70,8 @@ public class mainApp extends Application {
         stage.show();
 
         /*
-        Path for Automatic Path button on Tab1. Starts at 15,270. Ends at 590,260
+        Path for Automatic Path button on Tab1. Starts at (15,270). Ends at (590,260).
+        Initialized here to not waste time on action.
          */
         Path p1 = new Path(
                 new MoveTo(15,270),
@@ -91,7 +92,7 @@ public class mainApp extends Application {
 
         /*
         Automatic path button for Droid -
-        Takes the Path, and runs the Android image through the maze
+        Takes the Path, and runs the Android image through the maze. 15 seconds
          */
         robot.setOnAction(e-> {
             g1.getChildren().removeAll(robo,car,robo2); //Reset page
