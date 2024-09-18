@@ -1,12 +1,10 @@
 package com.example.homework_3;
 
 import javafx.animation.PathTransition;
-import javafx.animation.Transition;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
@@ -16,8 +14,6 @@ import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
-import java.io.IOException;
 
 public class mainApp extends Application {
     //Icons Loaded
@@ -29,23 +25,19 @@ public class mainApp extends Application {
     Image robotpic2 = new Image(getClass().getResourceAsStream("/assets/GUI/robot.png"));
     ImageView robo2 = new ImageView(robotpic);
 
-    //Buttons for Animation versus playing yourself
+    //Buttons for Animation, Car, And Robot (Tab 1)
     Button animation = new Button();
     Button player = new Button();
     Button robot = new Button();
+
+    //Buttons for Animation, Car, And Robot (Tab 2)
     Button animation2 = new Button();
     Button player2 = new Button();
     Button robot2 = new Button();
+
+    //Groups for tabs
     Group g1 = new Group();
     Group g2 = new Group();
-    //Create and Initialize TabPane
-
-    TabPane tb = new TabPane();
-    Tab tb1 = new Tab();
-    Tab tb2 = new Tab();
-
-    //Victory Screen
-    Label lbl = new Label();
 
     @Override
     public void start(Stage stage) {
@@ -62,21 +54,24 @@ public class mainApp extends Application {
         animation2.setText("Play Robot"); animation2.setLayoutX(100);animation2.setLayoutY(430);
         player2.setText("Play Car"); player2.setLayoutX(300);player2.setLayoutY(430);
         robot2.setText("Robot Auto"); robot2.setLayoutX(500);robot2.setLayoutY(430);
-        //Create and Initialize TabPane
 
+        //Create and Initialize TabPane
         g1.getChildren().addAll(view1,player,animation,robot);
         g2.getChildren().addAll(view2,player2,animation2,robot2);
         TabPane tb = new TabPane();
         Tab tb1 = new Tab(); tb1.setText("Maze1"); tb1.setContent(g1);
         Tab tb2 = new Tab(); tb2.setText("Maze2"); tb2.setContent(g2);
         tb.getTabs().add(tb1);tb.getTabs().add(tb2);
-        //Innit and show the scene
 
+        //Innit and show the scene
         Scene scene = new Scene(tb, 619, 485);
         stage.setScene(scene);
         stage.setTitle("Maze Project | Group 5 | Use 'W A S D' To move Up Left Down and Right Respectively");
         stage.show();
 
+        /*
+        Path for Automatic Path button on Tab1. Starts at 15,270. Ends at 590,260
+         */
         Path p1 = new Path(
                 new MoveTo(15,270),
                 new LineTo(50,270),
@@ -93,14 +88,18 @@ public class mainApp extends Application {
                 new LineTo(565,260),
                 new LineTo(590,260)
         );
+
+        /*
+        Automatic path for Droid.
+         */
         robot.setOnAction(e-> {
             g1.getChildren().removeAll(robo,car,robo2); //Reset page
-            g1.getChildren().add(robo2);
+            g1.getChildren().add(robo2); //Adds robo2
             PathTransition doPath = new PathTransition();
-            doPath.setDuration(Duration.seconds(15));
+            doPath.setDuration(Duration.seconds(15)); //15 sec animation
             doPath.setNode(robo2);
-            doPath.setPath(p1);
-            doPath.play();
+            doPath.setPath(p1); //Set Path
+            doPath.play(); //Plays for 15 seconds
             });
 
         /*
@@ -108,9 +107,9 @@ public class mainApp extends Application {
          */
         animation.setOnAction(e-> {
             g1.getChildren().removeAll(robo,robo2,car); //Reset Page
-            g1.getChildren().add(robo);
-            robo.setX(15.0);
-            robo.setY(260.0);
+            g1.getChildren().add(robo); //Adds robo
+            robo.setX(15.0); //Starting X
+            robo.setY(260.0); //Starting Y
             final double[] nextover = new double[3];
 //            Rectangle rr = new Rectangle();            //VERIFIES LOCATION FOR ROBO. DO NOT USE!!!!
 //            rr.setHeight(25);
@@ -138,15 +137,12 @@ public class mainApp extends Application {
                             break;
                         case A:
                             nextover[0] = maze1.getPixelReader().getArgb((int) (robo.getX()) + 5, (int) (robo.getY()));//Addition to offset an error
-
                             if (nextover[0] >= -1) {
                                 robo.setX(robo.getX() - 2);
-
                             };// Move left
                             break;
                         case D:
                             nextover[0] = maze1.getPixelReader().getArgb((int) (robo.getX()) + 20, (int) (robo.getY() + 24)); //Addition to offset an error
-                            int x = 0;
                             if (nextover[0] >= -1) {
                                 robo.setX(robo.getX() + 2);
                             };// Move right
@@ -158,7 +154,9 @@ public class mainApp extends Application {
 
     }
 
-
+    /*
+    Launch the Program here.
+     */
     public static void main(String[] args) {
         launch();
     }
