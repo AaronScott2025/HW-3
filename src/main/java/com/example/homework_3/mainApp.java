@@ -1,12 +1,8 @@
 package com.example.homework_3;
 
 import javafx.animation.PathTransition;
-import javafx.animation.PauseTransition;
 import javafx.animation.Transition;
-import javafx.animation.TranslateTransition;
 import javafx.application.Application;
-import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -15,14 +11,9 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.PixelReader;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.Color;
-import javafx.scene.robot.Robot;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -83,7 +74,7 @@ public class mainApp extends Application {
 
         Scene scene = new Scene(tb, 619, 485);
         stage.setScene(scene);
-        stage.setTitle("Maze Project | Group 5");
+        stage.setTitle("Maze Project | Group 5 | Use 'W A S D' To move Up Left Down and Right Respectively");
         stage.show();
 
         Path p1 = new Path(
@@ -103,7 +94,7 @@ public class mainApp extends Application {
                 new LineTo(590,260)
         );
         robot.setOnAction(e-> {
-            g1.getChildren().removeAll(robo,car,robo2);
+            g1.getChildren().removeAll(robo,car,robo2); //Reset page
             g1.getChildren().add(robo2);
             PathTransition doPath = new PathTransition();
             doPath.setDuration(Duration.seconds(15));
@@ -112,9 +103,11 @@ public class mainApp extends Application {
             doPath.play();
             });
 
-
+        /*
+        Clears board, and sets starting point of robo2. Moves with WASD
+         */
         animation.setOnAction(e-> {
-            g1.getChildren().removeAll(robo,robo2,car);
+            g1.getChildren().removeAll(robo,robo2,car); //Reset Page
             g1.getChildren().add(robo);
             robo.setX(15.0);
             robo.setY(260.0);
