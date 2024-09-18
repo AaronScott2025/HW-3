@@ -114,20 +114,12 @@ public class mainApp extends Application {
 
 
         animation.setOnAction(e-> {
-            double x = 15.0;
-            double y = 260.0;
-            robo.setX(x);
-            robo.setY(y);
             g1.getChildren().removeAll(robo,robo2,car);
             g1.getChildren().add(robo);
-            robo.setX(x);
-            robo.setY(y);
-            int pr = maze1.getPixelReader().getArgb(15,260);
-            System.out.println(pr);
+            robo.setX(15.0);
+            robo.setY(260.0);
             final double[] nextover = new double[3];
-            boolean fin = false;
-
-//            Rectangle rr = new Rectangle(); //VERIFY LOCATION FOR ROBOT
+//            Rectangle rr = new Rectangle();            //VERIFYS LOCATION FOR ROBOT. DO NOT USE!!!!
 //            rr.setHeight(25);
 //            rr.setWidth(25);
 //            rr.setX(robo.getX());
@@ -176,7 +168,7 @@ public class mainApp extends Application {
 
                                 @Override
                                 protected void interpolate(double v) {
-                                    nextover[0] = maze1.getPixelReader().getArgb((int) (robo.getX()) + 13, (int) (robo.getY()));//Addition to offset an error
+                                    nextover[0] = maze1.getPixelReader().getArgb((int) (robo.getX()) + 5, (int) (robo.getY()));//Addition to offset an error
 
                                     if (nextover[0] >= -1) {
                                         robo.setX(robo.getX() - 1);
