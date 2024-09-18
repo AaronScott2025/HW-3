@@ -233,6 +233,7 @@ public class mainApp extends Application {
                         if (nextover[0] >= -1) {
                             robo.setX(robo.getX() - 2);
                         };// Move left
+
                         break;
                     case D:
                         nextover[0] = maze1.getPixelReader().getArgb((int) (robo.getX()) + 20, (int) (robo.getY() + 24)); //Addition to offset an error
