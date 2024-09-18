@@ -90,7 +90,8 @@ public class mainApp extends Application {
         );
 
         /*
-        Automatic path for Droid.
+        Automatic path button for Droid -
+        Takes the Path, and runs the Android image through the maze
          */
         robot.setOnAction(e-> {
             g1.getChildren().removeAll(robo,car,robo2); //Reset page
@@ -103,6 +104,7 @@ public class mainApp extends Application {
             });
 
         /*
+        Animation Action Button -
         Clears board, and sets starting point of robo2. Moves with WASD
          */
         animation.setOnAction(e-> {
@@ -118,6 +120,7 @@ public class mainApp extends Application {
 //            rr.setY(robo.getY());
 //            rr.setFill(Color.BLACK);
 //            g1.getChildren().add(rr);
+
                 /*
                 KeyListener. Moves by 2 pixels each press to speed up process. Uses WASD
                  */
@@ -149,7 +152,6 @@ public class mainApp extends Application {
                             break;
                     }
                 });
-
         });
 
     }
