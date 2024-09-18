@@ -16,12 +16,11 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 /**
- * TODO: Add Car Class/Functionality. Tab2 Functions (Buttons and actions). Car for Tab1
+ * TODO: Add Car Class/Functionality. Tab2 Functions (Buttons and actions).
  */
 public class mainApp extends Application {
     //Icons Loaded
     Image carpic = new Image(getClass().getResourceAsStream("/assets/GUI/car.png"));
-
     ImageView car = new ImageView(carpic);
     Image robotpic = new Image(getClass().getResourceAsStream("/assets/GUI/robot.png"));
     ImageView robo = new ImageView(robotpic);
@@ -107,6 +106,51 @@ public class mainApp extends Application {
             doPath.play(); //Plays for 15 seconds
             });
 
+        player.setOnAction(e->{
+            g1.getChildren().removeAll(robo,car,robo2); //Reset page
+            g1.getChildren().add(car); //Adds car
+            //make car smaller preserve aspect ratio
+            car.setFitHeight(25);
+            car.setFitWidth(25);
+            car.setX(15.0); //Starting X
+            car.setY(260.0); //Starting Y
+
+            final double[] nextover = new double[3];
+
+
+            /*
+            KeyListener for Tab1 Animation -
+            Moves by 2 pixels each press to speed up process. Uses WASD
+             */
+            scene.setOnKeyPressed(event -> {
+                switch (event.getCode()) {
+                    case W:
+                        nextover[0] = maze1.getPixelReader().getArgb((int) (car.getX()) + 14, (int) (car.getY() - 2)); //Addition to offset an error
+                        if (nextover[0] >= -1) {
+                            car.setY(car.getY() - 2);
+                        }; // Move up
+                        break;
+                    case S:
+                        nextover[0] = maze1.getPixelReader().getArgb((int) (car.getX()) + 16, (int) (car.getY() + 24)); //Addition to offset an error
+                        if (nextover[0] >= -1) {
+                            car.setY(car.getY() + 2);
+                        }; // Move down
+                        break;
+                    case A:
+                        nextover[0] = maze1.getPixelReader().getArgb((int) (car.getX()) + 5, (int) (car.getY()));//Addition to offset an error
+                        if (nextover[0] >= -1) {
+                            car.setX(car.getX() - 2);
+                        };// Move left
+                        break;
+                    case D:
+                        nextover[0] = maze1.getPixelReader().getArgb((int) (car.getX()) + 20, (int) (car.getY() + 24)); //Addition to offset an error
+                        if (nextover[0] >= -1) {
+                            car.setX(car.getX() + 2);
+                        };// Move right
+                        break;
+                }
+            });
+        });
         /*
         Animation Action Button -
         Clears board, and sets starting point of robo2. Moves with WASD
