@@ -120,7 +120,7 @@ public class mainApp extends Application {
         Takes the Path, and runs the Android image through the maze. 10 seconds
          */
         robotAutomaticButton2.setOnAction(e-> {
-            g2.getChildren().removeAll(robo2, Autobot2,car); //Reset page
+            g2.getChildren().removeAll(robo2, Autobot2,car2); //Reset page
             g2.getChildren().add(Autobot2); //Adds robo2
             PathTransition doPath = new PathTransition();
             doPath.setDuration(Duration.seconds(10)); //15 sec animation
@@ -370,7 +370,7 @@ public class mainApp extends Application {
     }
 
     /*
-    Launch the Program here.
+    Launches the Program here.
      */
     public static void main(String[] args) {
         launch();
