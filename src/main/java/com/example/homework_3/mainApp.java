@@ -213,7 +213,7 @@ public class mainApp extends Application {
         /*
         Car Action Button2 -
         Clears board, and sets starting point of the Car Object from the Car Class On tab2. Moves with WASD
-         */
+        */
         carButton2.setOnAction(e->{
             g2.getChildren().removeAll(robo2, Autobot2,car2,r); //Reset page
             g2.getChildren().addAll(car2,r); //Adds car and hitbox
@@ -228,7 +228,7 @@ public class mainApp extends Application {
             final double[] nextover = new double[1];
 
             /*
-            KeyListener for Tab1 Animation -
+            KeyListener for Tab2 Animation -
             Moves by 2 pixels each press to speed up process. Uses WASD
              */
             scene.setOnKeyPressed(event -> {
