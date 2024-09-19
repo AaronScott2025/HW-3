@@ -17,10 +17,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-/**
- * TODO: CarButton2 (Line 217) + Functionality | BUGTESTING | Clean and Comment
- */
-
 public class mainApp extends Application {
     //Icons Loaded
     Image robotpic = new Image(getClass().getResourceAsStream("/assets/GUI/robot.png"));
