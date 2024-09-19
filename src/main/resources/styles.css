@@ -1,0 +1,21 @@
+.root {
+    -fx-font-family: "Arial";
+    -fx-font-size: 12px;
+}
+
+/* Styling for buttons */
+.button {
+    -fx-background-color: #000000; /* Black background */
+    -fx-text-fill: white; /* White text */
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+.button:hover {
+    -fx-background-color: #808080;
+    -fx-text-fill: black;
+}
+.tab {
+    -fx-background-color: #ADD8E6; /* Blue background */
+    -fx-text-fill: white; /* White text */
+}

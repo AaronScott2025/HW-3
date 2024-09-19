@@ -17,31 +17,36 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+/**
+ * TODO: CarButton2 + Functionality | BUGTESTING | Clean and Comment
+ */
+
 public class mainApp extends Application {
     //Icons Loaded
     Image robotpic = new Image(getClass().getResourceAsStream("/assets/GUI/robot.png"));
     ImageView robo = new ImageView(robotpic);
-    Image robotpic2 = new Image(getClass().getResourceAsStream("/assets/GUI/robot.png"));
+    ImageView Autobot = new ImageView(robotpic);
     ImageView robo2 = new ImageView(robotpic);
-    Rectangle r = new Rectangle();
+    ImageView Autobot2 = new ImageView(robotpic);
+
+    // Declare the Car variables
+    Car car = new Car();
+    Car car2 = new Car();
+    Rectangle r = new Rectangle(); //Hitbox for the Car
 
     //Buttons for Animation, Car, And Robot (Tab 1)
-    Button animation = new Button();
-    Button player = new Button();
-    Button robot = new Button();
+    Button robotButton = new Button();
+    Button carButton = new Button();
+    Button robotAutomaticButton = new Button();
 
     //Buttons for Animation, Car, And Robot (Tab 2)
-    Button animation2 = new Button();
-    Button player2 = new Button();
-    Button robot2 = new Button();
+    Button robotButton2 = new Button();
+    Button carButton2 = new Button();
+    Button robotAutomaticButton2 = new Button();
 
     //Groups for tabs
     Group g1 = new Group();
     Group g2 = new Group();
-
-    // Declare the Car variable
-    Car car = new Car();
-    Car car2 = new Car();
 
     @Override
     public void start(Stage stage) {
@@ -52,16 +57,16 @@ public class mainApp extends Application {
         ImageView view2 = new ImageView(maze2);view2.setFitWidth(609);view2.setFitHeight(430);
 
         //Buttons for Animation versus playing yourself
-        animation.setText("Play Robot"); animation.setLayoutX(100);animation.setLayoutY(430);
-        player.setText("Play Car"); player.setLayoutX(300);player.setLayoutY(430);
-        robot.setText("Robot Auto"); robot.setLayoutX(500);robot.setLayoutY(430);
-        animation2.setText("Play Robot"); animation2.setLayoutX(100);animation2.setLayoutY(430);
-        player2.setText("Play Car"); player2.setLayoutX(300);player2.setLayoutY(430);
-        robot2.setText("Robot Auto"); robot2.setLayoutX(500);robot2.setLayoutY(430);
+        robotButton.setText("Play Robot"); robotButton.setLayoutX(75);robotButton.setLayoutY(430);
+        carButton.setText("Play Car"); carButton.setLayoutX(275);carButton.setLayoutY(430);
+        robotAutomaticButton.setText("Robot Auto"); robotAutomaticButton.setLayoutX(475);robotAutomaticButton.setLayoutY(430);
+        robotButton2.setText("Play Robot"); robotButton2.setLayoutX(75);robotButton2.setLayoutY(430);
+        carButton2.setText("Play Car"); carButton2.setLayoutX(275);carButton2.setLayoutY(430);
+        robotAutomaticButton2.setText("Robot Auto"); robotAutomaticButton2.setLayoutX(475);robotAutomaticButton2.setLayoutY(430);
 
         //Create and Initialize TabPane
-        g1.getChildren().addAll(view1,player,animation,robot);
-        g2.getChildren().addAll(view2,player2,animation2,robot2);
+        g1.getChildren().addAll(view1, carButton, robotButton, robotAutomaticButton);
+        g2.getChildren().addAll(view2, carButton2, robotButton2, robotAutomaticButton2);
         TabPane tb = new TabPane();
         Tab tb1 = new Tab(); tb1.setText("Maze1"); tb1.setContent(g1);
         Tab tb2 = new Tab(); tb2.setText("Maze2"); tb2.setContent(g2);
@@ -69,6 +74,8 @@ public class mainApp extends Application {
 
         //Innit and show the scene
         Scene scene = new Scene(tb, 619, 485);
+        System.out.println(mainApp.class.getClassLoader().getResource("styles.css"));
+        scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         stage.setScene(scene);
         stage.setTitle("Maze Project | Group 5 | Use 'W A S D' To move Up Left Down and Right Respectively");
         stage.show();
@@ -107,37 +114,42 @@ public class mainApp extends Application {
                 new LineTo(575,390)
 
         );
-
-        robot2.setOnAction(e-> {
-            g2.getChildren().removeAll(robo,robo2,car); //Reset page
-            g2.getChildren().add(robo2); //Adds robo2
+        /*
+        Automatic path button for Droid on Tab2 -
+        Unloads all tab 2 objects
+        Takes the Path, and runs the Android image through the maze. 10 seconds
+         */
+        robotAutomaticButton2.setOnAction(e-> {
+            g2.getChildren().removeAll(robo2, Autobot2,car); //Reset page
+            g2.getChildren().add(Autobot2); //Adds robo2
             PathTransition doPath = new PathTransition();
-            doPath.setDuration(Duration.seconds(15)); //15 sec animation
-            doPath.setNode(robo2);
+            doPath.setDuration(Duration.seconds(10)); //15 sec animation
+            doPath.setNode(Autobot2);
             doPath.setPath(p2); //Set Path
             doPath.play(); //Plays for 15 seconds
         });
 
         /*
-        Automatic path button for Droid -
+        Automatic path button for Droid on Tab1 -
+        Unloads all tab 1 objects
         Takes the Path, and runs the Android image through the maze. 15 seconds
          */
-        robot.setOnAction(e-> {
-            g1.getChildren().removeAll(robo,robo2,car); //Reset page
-            g1.getChildren().add(robo2); //Adds robo2
+        robotAutomaticButton.setOnAction(e-> {
+            g1.getChildren().removeAll(robo, Autobot,car); //Reset page
+            g1.getChildren().add(Autobot); //Adds robo2
             PathTransition doPath = new PathTransition();
             doPath.setDuration(Duration.seconds(15)); //15 sec animation
-            doPath.setNode(robo2);
+            doPath.setNode(Autobot);
             doPath.setPath(p1); //Set Path
             doPath.play(); //Plays for 15 seconds
         });
 
         /*
         Car Action Button -
-        Clears board, and sets starting point of the Car Object from the Car Class. Moves with WASD
+        Clears board, and sets starting point of the Car Object from the Car Class on tab 1. Moves with WASD
          */
-        player.setOnAction(e->{
-            g1.getChildren().removeAll(robo,robo2,car,r); //Reset page
+        carButton.setOnAction(e->{
+            g1.getChildren().removeAll(robo, Autobot,car,r); //Reset page
             g1.getChildren().addAll(car,r); //Adds car and hitbox
             car.setScaleX(0.4);
             car.setScaleY(0.4);
@@ -148,7 +160,7 @@ public class mainApp extends Application {
             r.setLayoutX(car.getLayoutX()+18);
             r.setLayoutY(car.getLayoutY()+18); //Starting position
 
-            final double[] nextover = new double[3];
+            final double[] nextover = new double[1];
 
             /*
             KeyListener for Tab1 Animation -
@@ -199,12 +211,46 @@ public class mainApp extends Application {
             });
         });
         /*
+        Car Action Button2 -
+        Clears board, and sets starting point of the Car Object from the Car Class On tab2. Moves with WASD
+         */
+        carButton2.setOnAction(e->{
+            g2.getChildren().removeAll(robo2, Autobot2,car2,r); //Reset page
+            g2.getChildren().addAll(car2,r); //Adds car and hitbox
+            car2.setScaleX(0.4);
+            car2.setScaleY(0.4);
+            car2.setPosition(15.0, 15.0); //Starting position
+            r.setFill(Color.TRANSPARENT);
+            r.setHeight(15);
+            r.setWidth(20);
+            r.setLayoutX(car.getLayoutX()+18);
+            r.setLayoutY(car.getLayoutY()+18); //Starting position
+            final double[] nextover = new double[1];
+
+            /*
+            KeyListener for Tab1 Animation -
+            Moves by 2 pixels each press to speed up process. Uses WASD
+             */
+            scene.setOnKeyPressed(event -> {
+                switch (event.getCode()) {
+                    case W:// Move up
+                        break;
+                    case S:// Move down
+                        break;
+                    case A:// Move left
+                        break;
+                    case D:// Move right
+                        break;
+                }
+            });
+        });
+        /*
         Animation Action Button -
         Clears board, and sets starting point of robo2. Moves with WASD
         In Tab1
          */
-        animation.setOnAction(e-> {
-            g1.getChildren().removeAll(robo,robo2,car); //Reset Page
+        robotButton.setOnAction(e-> {
+            g1.getChildren().removeAll(robo, Autobot,car); //Reset Page
             g1.getChildren().add(robo); //Adds robo
             robo.setX(15.0); //Starting X
             robo.setY(260.0); //Starting Y
@@ -246,53 +292,46 @@ public class mainApp extends Application {
         });
 
         /*
-        Tab 2
-
+        Animation Action Button -
+        Clears board, and sets starting point of robo2. Moves with WASD
+        In Tab1
          */
-        animation2.setOnAction(e->{
-            g2.getChildren().removeAll(robo,robo2,r); //Reset page
-            g2.getChildren().addAll(robo,r); //Adds robo
-            robo.setLayoutX(25.0); //Starting X
-            robo.setLayoutY(25.0); //add the full functionality of the robot here
-            r.setFill(Color.TRANSPARENT);
-            r.setHeight(25);
-            r.setWidth(25);
-            r.setLayoutX(robo.getX()+10);
-            r.setLayoutY(robo.getY()); //Starting position
+        robotButton2.setOnAction(e->{
+            g2.getChildren().removeAll(robo2, Autobot2,car2); //Reset page
+            g2.getChildren().addAll(robo2); //Adds robo
+            robo2.setLayoutX(25.0); //Starting X
+            robo2.setLayoutY(25.0); //add the full functionality of the robot here
             final double[] nextover = new double[1];
 
             scene.setOnKeyPressed(event -> {
                 switch (event.getCode()) {
                     case W:
-                        nextover[0] = maze2.getPixelReader().getArgb((int) (robo.getLayoutX())-5, (int) (robo.getLayoutY())); //Addition to offset an error
-                        //System.out.println(nextover[0]);
+                        nextover[0] = maze2.getPixelReader().getArgb((int) (robo2.getLayoutX()), (int) (robo2.getLayoutY() - 5)); //Addition to offset an error
                         if (nextover[0] != -1.6760833E7)  {
-                            robo.setLayoutY(robo.getLayoutY() - 5);
+                            robo2.setLayoutY(robo2.getLayoutY() - 5);
                         }; // Move up
                         break;
                     case S:
-                        nextover[0] = maze2.getPixelReader().getArgb((int) (robo.getLayoutX())-5, (int) (robo.getLayoutY())); //Addition to offset an error
+                        nextover[0] = maze2.getPixelReader().getArgb((int) (robo2.getLayoutX()), (int) (robo2.getLayoutY() + 5)); //Addition to offset an error
                         if (nextover[0] != -1.6760833E7)  {
-                            robo.setLayoutY(robo.getLayoutY() + 5);
+                            robo2.setLayoutY(robo2.getLayoutY() + 5);
                         }; // Move down
                         break;
                     case A:
-                        nextover[0] = maze2.getPixelReader().getArgb((int) (robo.getLayoutX())-5, (int) (robo.getLayoutY()));//Addition to offset an error
+                        nextover[0] = maze2.getPixelReader().getArgb((int) (robo2.getLayoutX() - 25), (int) (robo2.getLayoutY()));//Addition to offset an error
                         if (nextover[0] != -1.6760833E7)  {
-                            robo.setLayoutX(robo.getLayoutX() - 5);
+                            robo2.setLayoutX(robo2.getLayoutX() - 5);
                         };// Move left
                         break;
                     case D:
-                        nextover[0] = maze2.getPixelReader().getArgb((int) (robo.getLayoutX())+5, (int) (robo.getLayoutY())); //Addition to offset an error
+                        nextover[0] = maze2.getPixelReader().getArgb((int) (robo2.getLayoutX() + 25), (int) (robo2.getLayoutY())); //Addition to offset an error
                         if (nextover[0] != -1.6760833E7) {
-                            robo.setLayoutX(robo.getLayoutX() + 5);
+                            robo2.setLayoutX(robo2.getLayoutX() + 5);
                         };// Move right
                         break;
                 }
             });
         });
-        final double[] nextover = new double[3];
-
     }
 
     /*
