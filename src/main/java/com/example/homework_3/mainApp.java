@@ -233,13 +233,48 @@ public class mainApp extends Application {
              */
             scene.setOnKeyPressed(event -> {
                 switch (event.getCode()) {
-                    case W:// Move up
+                    case W:
+                        r.setLayoutX(car2.getLayoutX()+14);
+                        r.setLayoutY(car2.getLayoutY()+18); //Starting position
+                        nextover[0] = maze2.getPixelReader().getArgb((int) (r.getLayoutX()) + 16, (int) (r.getLayoutY()+13)); //Addition to offset an error
+                        if (nextover[0] != -1.6760833E7)  {
+                            car2.setLayoutY(car2.getLayoutY() - 5);
+                            car2.setRotation(-90); // Face up
+
+                        // Move up
+                        };
                         break;
-                    case S:// Move down
+                    case S:
+                        r.setLayoutX(car2.getLayoutX()+14);
+                        r.setLayoutY(car2.getLayoutY()+18); //Starting position
+                        nextover[0] = maze2.getPixelReader().getArgb((int) (r.getLayoutX()) + 14, (int) (r.getLayoutY()+17)); //Addition to offset an error
+                        if (nextover[0] != -1.6760833E7)  {
+                            car2.setLayoutY(car2.getLayoutY() + 5);
+                            car2.setRotation(90); // Face down
+                        };
+                        // Move down
                         break;
-                    case A:// Move left
+                    case A:
+                        r.setLayoutX(car2.getLayoutX()+14);
+                        r.setLayoutY(car2.getLayoutY()+18); //Starting position
+                        nextover[0] = maze2.getPixelReader().getArgb((int) (r.getLayoutX()) + 14, (int) (r.getLayoutY()+15));//Addition to offset an error
+                        if (nextover[0] != -1.6760833E7)  {
+                            car2.setLayoutX(car2.getLayoutX() - 5);
+                            car2.setRotation(0);
+                            car2.invertHorizontal(); // Face left
+                        }
+                        // Move left
                         break;
-                    case D:// Move right
+                    case D:
+                        r.setLayoutX(car2.getLayoutX()+14);
+                        r.setLayoutY(car2.getLayoutY()+18); //Starting position
+                        nextover[0] = maze2.getPixelReader().getArgb((int) (r.getLayoutX()) + 18, (int) (r.getLayoutY()+15)); //Addition to offset an error
+                        if (nextover[0] != -1.6760833E7)  {
+                            car2.setLayoutX(car2.getLayoutX() + 5);
+                            car2.setRotation(0);
+                            car2.resetInvertHorizontal();// Face right
+                        }
+                        // Move right
                         break;
                 }
             });
